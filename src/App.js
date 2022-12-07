@@ -1,4 +1,6 @@
 import { getImageUrl } from './utils.js';
+import { useParams } from 'react';
+console.log(useParams);
 
 function Profile({ person }) {
   return (
@@ -51,7 +53,7 @@ const persons = [
     name: 'Katsuko Saruhashi',
     image: {
       code: 'YfeOqp2',
-      width: 70,
+      width: 80,
       height: 70
     },
     profession: 'geochemist',
@@ -65,6 +67,8 @@ const persons = [
 ]
 
 export default function Gallery() {
+  // const { userName } = useParams();
+  // console.log(`userName: ${userName}`);
   const list = persons.map((x, i) => (<Profile person={x} key={i} />))
   return (
     <div>
