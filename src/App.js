@@ -1,12 +1,23 @@
-export default function Toolbar() {
+import { useState } from "react";
+
+export default function EditContent() {
+  const [content, setContent] = useState('');
+
+  function handleInput(e) {
+    // setContent('');
+    setContent(e.target.value);
+  }
+
   return (
-    <div className="Toolbar" onInput={() => {
-      console.log('toolbar!');
-    }}>
-      <input type="text" />
-      <button onClick={() => alert('Uploading!')}>
-        Upload Image
-      </button>
-    </div>
+    <textarea
+      value={content}
+      style={{
+        width: '600px',
+        height: '600px',
+        border: '1px solid red',
+        wordBreak: 'break-word',
+      }}
+      onChange={handleInput}
+    />
   );
 }
