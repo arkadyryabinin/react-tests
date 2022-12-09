@@ -1,0 +1,7 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+  /* border: 1px solid grey; */
+  margin: 5% auto;
+  box-sizing: border-box;
+}
