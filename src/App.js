@@ -24,7 +24,7 @@ function Content({ children }) {
 
 function Textarea({ content, onChange }) {
   return (
-    <textarea className="area" value={content} onChange={onChange} />
+    <textarea className="area" value={content} onChange={onChange} placeholder='-- put your text here' />
   )
 }
 
@@ -74,7 +74,10 @@ export default function App() {
   return (
     <Container>
       <Content>
-        <Textarea content={content} onChange={handleChangeContent} />
+        <Textarea
+          content={content}
+          onChange={handleChangeContent}
+        />
         <Controls>
           <Button action={convertToLowerCase}>
             lower case
