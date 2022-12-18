@@ -45,7 +45,7 @@ export default function EditContent() {
 
   return (
     <>
-      {list.map((item, index) => <Note key={getKey()} onChange={handleInput(index)} text={item} />)}
+      {list.map((item, index) => <Note key={index} onChange={handleInput(index)} text={item} />)}
     </>
   );
 }
