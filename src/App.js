@@ -1,52 +1,43 @@
-import { useReducer } from "react";
-import './Note.css';
-
-const getKey = (() => {
-  let key = 0;
-  return () => {
-    key += 1;
-    return key;
-  }
-})();
-
-function Note({ text = '', onChange }) {
-  return (
-    <>
-      <textarea
-        className="Note"
-        value={text}
-        onChange={onChange}
-      />
-    </>
-  );
-}
-
-function textReducer(state, action) {
-  const itemsList = [...state];
-  switch (action.type) {
-    case 'input': itemsList[action.index] = action.text; break;
-    default: break;
-  }
-  return itemsList;
-}
-
-const initList = ['', '', '', '', ''];
-
+import { useState } from "react";
 
 export default function EditContent() {
-  const [list, dispatch] = useReducer(textReducer, initList);
+  const [content, setContent] = useState('');
 
-  const handleInput = (index) =>(e) =>{
-    dispatch({
-      type: 'input',
-      index,
-      text: e.target.value,
-    });
+  function handleInput(e) {
+    // setContent('');
+    setContent(e.target.value);
+  }
+
+  function convertToLowerCase() {
+    setContent(content.toLowerCase());
+  }
+
+  function convertToUpperCase() {
+    setContent(content.toUpperCase());
+  }
+
+  function clearText() {
+    setContent('');
+  }
+
+  async function copyToClipBoard(e) {
+    try {
+      await navigator.clipboard.writeText(content);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
-    <>
-      {list.map((item, index) => <Note key={getKey()} onChange={handleInput(index)} text={item} />)}
-    </>
+    <textarea
+      value={content}
+      style={{
+        width: '600px',
+        height: '600px',
+        border: '1px solid red',
+        wordBreak: 'break-word',
+      }}
+      onChange={handleInput}
+    />
   );
 }
