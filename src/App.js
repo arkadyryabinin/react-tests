@@ -36,6 +36,12 @@ function Note({ initData }) {
   }
 
   useEffect(() => {
+    resizedList.push({
+      type: 'resize',
+      id,
+      headerHeight: Math.max(refHeader.current.scrollHeight, refHeader.current.clientHeight),
+      bodyHeight: Math.max(refBody.current.scrollHeight, refBody.current.clientHeight),
+    })
     dispatch({
       type: 'resize',
       id,
@@ -88,12 +94,11 @@ function NoteHeader({ text = '', onChange, headerHeight, refHeader }) {
 }
 
 const initList = getData();
+const resizedList = [];
 
 export default function EditContent() {
-  const [list, dispatch] = useReducer(noteReducer, initList);
-  useEffect(() => {
-    
-  }, []);
+  // const [list, dispatch] = useReducer(noteReducer, initList);
+
   // const handleInput = (index) =>(e) =>{
   //   dispatch({
   //     type: 'input',
@@ -101,10 +106,10 @@ export default function EditContent() {
   //     text: e.target.value,
   //   });
   // }
-
+  console.log(resizedList);
   return (
     <NotesBlock>
-      {list.map((item) => (
+      {initList.map((item) => (
         // <Note key={item.id} initData={{ ...item, headerHeight: null, bodyHeight: 40 }}/>
         <Note key={item.id} initData={item}/>
       ))}
