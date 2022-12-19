@@ -1,10 +1,7 @@
-import { useReducer } from "react";
-import Masonry from 'react-masonry-css';
-
+import { useReducer, useEffect, useRef } from "react";
 import { noteReducer } from "./noteReducer";
 import { getData } from "./initData.js";
 import './Note.css';
-import './Masonry.css';
 
 function NotesBlock({ children }) {
   return (
@@ -16,42 +13,64 @@ function NotesBlock({ children }) {
 
 function Note({ initData }) {
   const [noteData, dispatch] = useReducer(noteReducer, initData);
-  const { header, body, headerHeight, bodyHeight } = noteData;
+  const { header, body, headerHeight, bodyHeight, id } = noteData;
+
+  const refHeader = useRef(null);
+  const refBody = useRef(null);
 
   const handleInput = (area) => (e) =>{
     // console.log(e.target.clientHeight, e.target.scrollHeight);
+    console.log(e.type)
     dispatch({
       type: 'input',
       area,
       value: e.target.value,
-      height: Math.max(e.target.scrollHeight, e.target.clientHeight),
+      // height: Math.max(e.target.scrollHeight, e.target.clientHeight),
+    });
+    dispatch({
+      type: 'resize',
+      id,
+      headerHeight: Math.max(refHeader.current.scrollHeight, refHeader.current.clientHeight),
+      bodyHeight: Math.max(refBody.current.scrollHeight, refBody.current.clientHeight),
     });
   }
 
+  useEffect(() => {
+    dispatch({
+      type: 'resize',
+      id,
+      headerHeight: Math.max(refHeader.current.scrollHeight, refHeader.current.clientHeight),
+      bodyHeight: Math.max(refBody.current.scrollHeight, refBody.current.clientHeight),
+    });
+  }, []);
+
   return (
     <div className="Note">
-      <NoteHeader text={header} headerHeight={headerHeight} onChange={handleInput('header')}/>
-      <NoteBody text={body} bodyHeight={bodyHeight} onChange={handleInput('body')}/>
+      <NoteHeader text={header} headerHeight={headerHeight} onChange={handleInput('header')} refHeader={refHeader} />
+      <NoteBody text={body} bodyHeight={bodyHeight} onChange={handleInput('body')} refBody={refBody} />
     </div>
   );
 }
 
-function NoteBody({ text = '', onChange, bodyHeight }) {
+function NoteBody({ text = '', onChange, bodyHeight, refBody }) {
   return (
     <>
       <textarea
         placeholder="-- Текст"
-        rows={3}
+        rows={2}
+        wrap="soft"
         style={{ height: bodyHeight }}
         className="NoteBody"
         value={text}
         onChange={onChange}
+        onLoad={onChange}
+        ref={refBody}
       />
     </>
   );
 }
 
-function NoteHeader({ text = '', onChange, headerHeight }) {
+function NoteHeader({ text = '', onChange, headerHeight, refHeader }) {
   return (
     <>
       <textarea
@@ -62,6 +81,7 @@ function NoteHeader({ text = '', onChange, headerHeight }) {
         className="NoteHeader"
         value={text}
         onChange={onChange}
+        ref={refHeader}
       />
     </>
   );
@@ -71,7 +91,9 @@ const initList = getData();
 
 export default function EditContent() {
   const [list, dispatch] = useReducer(noteReducer, initList);
-
+  useEffect(() => {
+    
+  }, []);
   // const handleInput = (index) =>(e) =>{
   //   dispatch({
   //     type: 'input',
@@ -81,14 +103,11 @@ export default function EditContent() {
   // }
 
   return (
-    <Masonry
-      breakpointCols={3}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column">
+    <NotesBlock>
       {list.map((item) => (
         // <Note key={item.id} initData={{ ...item, headerHeight: null, bodyHeight: 40 }}/>
         <Note key={item.id} initData={item}/>
       ))}
-    </Masonry>
+    </NotesBlock>
   );
 }

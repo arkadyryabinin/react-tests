@@ -2,8 +2,9 @@ import { useReducer } from "react";
 
 export function noteReducer(state, action) {
   switch (true) {
-    case action.type === 'input' && action.area === 'header': return { ...state, header: action.value, headerHeight: action.height };
-    case action.type === 'input' && action.area === 'body': return { ...state, body: action.value, bodyHeight: action.height };
-    default: break;
+    case action.type === 'input' && action.area === 'header': return { ...state, header: action.value };
+    case action.type === 'input' && action.area === 'body': return { ...state, body: action.value };
+    case action.type === 'resize': return {...state, headerHeight: action.headerHeight, bodyHeight: action.bodyHeight };
+    default: return null;
   }
 }

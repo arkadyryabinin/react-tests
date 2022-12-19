@@ -1,13 +1,9 @@
 .NotesBlock {
-  /* display: flex;
+  display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px; */
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: masonry;
+  gap: 10px;
 }
 .Note {
   border: 2px solid red;
@@ -21,8 +17,7 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid white;
-  border-radius: 5px;
+  border: none;
 }
 
 .NoteBody {
@@ -31,7 +26,6 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid white;
-  border-radius: 5px;
+  border: none;
 }
 
