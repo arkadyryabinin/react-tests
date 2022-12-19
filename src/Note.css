@@ -1,3 +1,30 @@
-.Note {
-  resize: none;
+.NotesBlock {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
 }
+.Note {
+  border: 2px solid red;
+  box-sizing: border-box;
+  width: 200px;
+}
+.NoteHeader {
+  resize: none;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+}
+
+.NoteBody {
+  resize: none;
+  font-weight: normal;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+}
+

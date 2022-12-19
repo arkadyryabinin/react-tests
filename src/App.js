@@ -1,19 +1,46 @@
 import { useReducer } from "react";
+import { getData } from "./ initData";
+import { noteReducer } from "./noteReducer";
 import './Note.css';
 
-const getKey = (() => {
-  let key = 0;
-  return () => {
-    key += 1;
-    return key;
-  }
-})();
+function NotesBlock({ children }) {
+  return (
+    <div className="NotesBlock">
+      {children}
+    </div>
+  )
+}
 
-function Note({ text = '', onChange }) {
+function Note({ initData }) {
+  const [noteData, dispatch] = useReducer(noteReducer, initData);
+  const { header, body, headerHeight, bodyHeight } = noteData;
+
+  const handleInput = (area) => (e) =>{
+    // console.log(e.target.clientHeight, e.target.scrollHeight);
+    dispatch({
+      type: 'input',
+      area,
+      value: e.target.value,
+      height: Math.max(e.target.scrollHeight, e.target.clientHeight),
+    });
+  }
+
+  return (
+    <div className="Note">
+      <NoteHeader text={header} headerHeight={headerHeight} onChange={handleInput('header')}/>
+      <NoteBody text={body} bodyHeight={bodyHeight} onChange={handleInput('body')}/>
+    </div>
+  );
+}
+
+function NoteBody({ text = '', onChange, bodyHeight }) {
   return (
     <>
       <textarea
-        className="Note"
+        placeholder="-- Текст"
+        rows={3}
+        style={{ height: bodyHeight }}
+        className="NoteBody"
         value={text}
         onChange={onChange}
       />
@@ -21,31 +48,41 @@ function Note({ text = '', onChange }) {
   );
 }
 
-function textReducer(state, action) {
-  const itemsList = [...state];
-  switch (action.type) {
-    case 'input': itemsList[action.index] = action.text; break;
-    default: break;
-  }
-  return itemsList;
-}
-
-const initList = ['', '', '', '', ''];
-
-export default function EditContent() {
-  const [list, dispatch] = useReducer(textReducer, initList);
-
-  const handleInput = (index) =>(e) =>{
-    dispatch({
-      type: 'input',
-      index,
-      text: e.target.value,
-    });
-  }
-
+function NoteHeader({ text = '', onChange, headerHeight }) {
   return (
     <>
-      {list.map((item, index) => <Note key={index} onChange={handleInput(index)} text={item} />)}
+      <textarea
+        placeholder="-- Заголовок"
+        rows={1}
+        style={{ height: headerHeight }}
+        wrap="hard"
+        className="NoteHeader"
+        value={text}
+        onChange={onChange}
+      />
     </>
+  );
+}
+
+const initList = getData();
+
+export default function EditContent() {
+  const [list, dispatch] = useReducer(noteReducer, initList);
+
+  // const handleInput = (index) =>(e) =>{
+  //   dispatch({
+  //     type: 'input',
+  //     index,
+  //     text: e.target.value,
+  //   });
+  // }
+
+  return (
+    <NotesBlock>
+      {list.map((item) => (
+        // <Note key={item.id} initData={{ ...item, headerHeight: null, bodyHeight: 40 }}/>
+        <Note key={item.id} initData={item}/>
+      ))}
+    </NotesBlock>
   );
 }
