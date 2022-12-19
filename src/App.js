@@ -1,7 +1,10 @@
 import { useReducer } from "react";
-import { getData } from "./ initData";
+import Masonry from 'react-masonry-css';
+
 import { noteReducer } from "./noteReducer";
+import { getData } from "./initData.js";
 import './Note.css';
+import './Masonry.css';
 
 function NotesBlock({ children }) {
   return (
@@ -78,11 +81,14 @@ export default function EditContent() {
   // }
 
   return (
-    <NotesBlock>
+    <Masonry
+      breakpointCols={3}
+      className="my-masonry-grid"
+      columnClassName="my-masonry-grid_column">
       {list.map((item) => (
         // <Note key={item.id} initData={{ ...item, headerHeight: null, bodyHeight: 40 }}/>
         <Note key={item.id} initData={item}/>
       ))}
-    </NotesBlock>
+    </Masonry>
   );
 }
