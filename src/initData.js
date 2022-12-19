@@ -7,11 +7,10 @@ export function getData() {
 
   const x = [];
   for (let i = 20; i > 0; i += -1) {
-    const start = getRandomInt(y.length/2);
     x.push({
       id: i,
-      header: y.substring(start, start + getRandomInt(50)),
-      body: y.substring(start, start + getRandomInt(start / 4)),
+      header: y.substring(0, getRandomInt(50)),
+      body: y.substring(0, getRandomInt(y.length/2)),
     })
   }
   return x;
