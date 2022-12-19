@@ -4,6 +4,7 @@ import { getData } from "./initData.js";
 import './Note.css';
 
 // Masonry layout
+// test
 
 function NotesBlock({ children }) {
   return (
