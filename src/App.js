@@ -3,6 +3,8 @@ import { noteReducer } from "./noteReducer";
 import { getData } from "./initData.js";
 import './Note.css';
 
+// Masonry layout
+
 function NotesBlock({ children }) {
   return (
     <div className="NotesBlock">
