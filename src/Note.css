@@ -5,29 +5,29 @@
   align-items: flex-start;
   gap: 10px;
 }
-.Note {
+.NoteWrapper {
   border: 2px solid teal;
   box-sizing: border-box;
-  width: 200px;
   border-radius: 5px;
+  padding: 5px;
 }
-.NoteHeader {
-  resize: none;
-  font-weight: bold;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
+.Note {
   border: none;
-  border-radius: 3px;
+  box-sizing: border-box;
+  width: 200px;
+  font-size: 14px;
+  font-weight: normal;
+  max-height: 250px;
+  overflow: hidden;
+  /* white-space: nowrap; */
+  /* text-overflow: ellipsis;
+  display: inline-block; */
 }
 
-.NoteBody {
-  resize: none;
-  font-weight: normal;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 3px;
+.NoteHeader {
+  margin: 0 0 5px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: bold;
 }
 
