@@ -10,7 +10,7 @@ export function getData() {
     x.push({
       id: i,
       header: y.substring(0, getRandomInt(50)),
-      body: y.substring(0, getRandomInt(y.length/2)),
+      body: y.substring(0, getRandomInt(y.length)),
     })
   }
   return x;
