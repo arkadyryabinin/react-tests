@@ -3,7 +3,7 @@
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
+  gap: 20px;
 }
 .NoteWrapper {
   border: 1px solid #e0e0e0;
