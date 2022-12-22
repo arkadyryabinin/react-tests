@@ -6,9 +6,9 @@
   gap: 10px;
 }
 .NoteWrapper {
-  border: 2px solid teal;
+  border: 1px solid #e0e0e0;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 5px;
 }
 .Note {
@@ -17,7 +17,7 @@
   width: 200px;
   font-size: 14px;
   font-weight: normal;
-  max-height: 250px;
+  /* max-height: 250px; */
   overflow: hidden;
   position: relative;
   /* white-space: nowrap; */
@@ -25,11 +25,10 @@
   display: inline-block; */
 }
 
-.Note::after {
+.Note.Cropped::after {
   content: '';
   display: block;
-  height: 80%;
-  max-height: 550px;
+  height: 20%;
   left: -15px;
   right: -15px;
   position: absolute;
@@ -37,6 +36,7 @@
   z-index: 10;
   bottom: 0;
   background: linear-gradient(to top,#fff 0,rgba(255,255,255,.9) 5%,rgba(255,255,255,0) 100%);
+  /* background: linear-gradient(to top,#fff 0,rgba(255,255,255,.9) 5%,rgba(255,255,255,0) 100%); */
   cursor: pointer;
 }
 
