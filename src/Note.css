@@ -1,9 +1,14 @@
 .NotesBlock {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 20px;
+}
+.Column {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .NoteWrapper {
   border: 1px solid #e0e0e0;

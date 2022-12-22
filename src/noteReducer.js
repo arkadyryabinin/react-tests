@@ -6,6 +6,7 @@ export function noteReducer(state, action) {
     // case action.type === 'input' && action.area === 'body': return { ...state, body: action.value };
     // case action.type === 'resize': return {...state, headerHeight: action.headerHeight, bodyHeight: action.bodyHeight };
     case action.type === 'crop': return { ...state, isCropped: true };
+    case action.type === 'resize': return action.numColumns;
     default: return null;
   }
 }
