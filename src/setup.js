@@ -1,5 +1,6 @@
 const setup = () => ({
-  cropAt: 300,
+  cropAt: 265,
+  noteWidth: 240,
 })
 
 export default setup();

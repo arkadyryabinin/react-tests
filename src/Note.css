@@ -7,6 +7,7 @@
 }
 .NoteWrapper {
   border: 1px solid #e0e0e0;
+  /* border: 1px solid teal; */
   box-sizing: border-box;
   border-radius: 8px;
   padding: 5px;
@@ -14,8 +15,9 @@
 .Note {
   border: none;
   box-sizing: border-box;
-  width: 200px;
+  /* width: 200px; */
   font-size: 14px;
+  line-height: 20px;
   font-weight: normal;
   /* max-height: 250px; */
   overflow: hidden;
@@ -43,7 +45,7 @@
 .NoteHeader {
   margin: 0 0 5px;
   padding: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
 }
 

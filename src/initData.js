@@ -6,7 +6,7 @@ export function getData() {
   }
 
   const x = [];
-  for (let i = 20; i > 0; i += -1) {
+  for (let i = 40; i > 0; i += -1) {
     x.push({
       id: i,
       header: y.substring(0, getRandomInt(50)),
