@@ -1,4 +1,5 @@
 import { getData } from "./initData.js";
+import Masonry from "./Masonry.js";
 import setup from "./setup";
 import Note from "./Note";
 import { noteReducer } from './noteReducer';
@@ -19,19 +20,6 @@ function NoteWrapper({ children }) {
   )
 }
 
-function NotesBlock({ children, gap }) {
-  return (
-    <div className="NotesBlock" style={{ gap, margin: gap }}>{children}</div>
-  )
-}
-
-function Column({ children, colWidth, gap }) {
-  return (
-    <div className="Column" style={{ width: colWidth, gap }}>{children}</div>
-  )
-}
-
-
 const initList = getData();
 
 export default function App() {
@@ -50,28 +38,17 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const columnsList = (new Array(numColumns)).fill(0).map((x, i) => (
-    <Column
-      key={i}
-      colWidth={colWidth}
-      gap={gap}
-    >
-      {
-        initList
-          .filter((item, index) => index % numColumns === i)
-          .map((item) => (
-            <NoteWrapper key={item.id}>
-              <Note initData={item} cropAt={cropAt}/>
-            </NoteWrapper>
-          )
-        )
-      }
-    </Column>
+  console.log(numColumns);
+  const itemsList = initList.map((item) => (
+    <NoteWrapper key={item.id}>
+      <Note initData={item} cropAt={cropAt}/>
+    </NoteWrapper>
   ));
 
+
   return (
-    <NotesBlock gap={gap}>
-      {columnsList}
-    </NotesBlock>
+    <Masonry numColumns={numColumns} colWidth={colWidth} gap={gap}>
+      {itemsList}
+    </Masonry>
   );
 }
