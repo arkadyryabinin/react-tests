@@ -21,8 +21,8 @@ let counter = 40;
 
 export default function App() {
 
-  const [state, dispatchState] = useReducer(noteReducer, { ...setup, numColumns: calcColsNum() });
-  const [list, dispatchList] = useReducer(noteReducer, initList);
+  const [state, dispatchStateAction] = useReducer(noteReducer, { ...setup, numColumns: calcColsNum() });
+  const [list, dispatchListAction] = useReducer(noteReducer, initList);
   const { colWidth, gap, numColumns, cropAt } = state;
 
   function handleResize() {
@@ -30,7 +30,7 @@ export default function App() {
     const interval = setInterval(() => {
       if (isResized) {
         isResized = false;
-        dispatchState({ type: 'resize', numColumns: calcColsNum() });
+        dispatchStateAction({ type: 'resize', numColumns: calcColsNum() });
       }
     }, 1000);
     return () => clearInterval(interval);
@@ -38,13 +38,11 @@ export default function App() {
 
   useEffect(handleResize, []);
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(counter);
+    async function fetchData() {
       if (counter <= 0) return;
       const array = await getData(counter, 10);
-      console.log(array);
-      dispatchList({ type: 'fetch_items', value: array });
-    };
+      dispatchListAction({ type: 'fetch_items', value: array });
+    }
     if (counter > 0) {
       fetchData();
       counter += -10;
