@@ -38,11 +38,17 @@ export default function App() {
 
   useEffect(handleResize, []);
   useEffect(() => {
-    console.log(counter);
-    if (counter <= 0) return;
-    const array = getData(counter, 10);
-    counter += -10;
-    dispatchList({ type: 'fetch_items', value: array });
+    const fetchData = async () => {
+      console.log(counter);
+      if (counter <= 0) return;
+      const array = await getData(counter, 10);
+      console.log(array);
+      dispatchList({ type: 'fetch_items', value: array });
+    };
+    if (counter > 0) {
+      fetchData();
+      counter += -10;
+    }
   }, [list]);
 
   if (list.length === 0) return null;
