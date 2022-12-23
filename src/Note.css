@@ -4,12 +4,12 @@
   justify-content: flex-start;
   align-items: flex-start;
 } */
-.Column {
+/* .Column {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-}
+} */
 .NoteWrapper {
   border: 1px solid #e0e0e0;
   /* border: 1px solid teal; */

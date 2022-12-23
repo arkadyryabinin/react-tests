@@ -1,6 +1,20 @@
+// usage:
+// <Masonry numColumns={5} colWidth={240} gap={20)>
+//   {/* array of JSX items */}
+// </Masonry>
+
+
 function Column({ children, colWidth, gap }) {
+  const style = {
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: colWidth,
+    gap,
+  };
   return (
-    <div className="Column" style={{ width: colWidth, gap }}>{children}</div>
+    <div style={style}>{children}</div>
   )
 }
 
@@ -19,11 +33,11 @@ export default function Masonry({ children, numColumns, colWidth, gap }) {
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    gap,
   };
 
   return (
-    <div
-      className="Masonry" style={style}>{columnsList}</div>
+    <div style={style}>{columnsList}</div>
   )
 }
