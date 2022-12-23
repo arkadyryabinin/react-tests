@@ -1,7 +1,7 @@
 import { getData } from "./initData.js";
 import Masonry from "./Masonry.js";
 import setup from "./setup";
-import Note from "./Note";
+import { Note, NoteWrapper } from "./Note";
 import { noteReducer } from './noteReducer';
 import './Note.css';
 import { useEffect, useReducer } from "react";
@@ -14,32 +14,40 @@ function calcColsNum() {
   return Math.floor((document.body.clientWidth + setup.gap) / (setup.noteWidth + setup.gap));
 }
 
-function NoteWrapper({ children }) {
-  return (
-    <div className="NoteWrapper">{children}</div>
-  )
-}
+// const initList = getData();
+const initList = [];
 
-const initList = getData();
+let counter = 40;
 
 export default function App() {
-  const [state, dispatch] = useReducer(noteReducer, { ...setup, numColumns: calcColsNum() });
 
+  const [state, dispatchState] = useReducer(noteReducer, { ...setup, numColumns: calcColsNum() });
+  const [list, dispatchList] = useReducer(noteReducer, initList);
   const { colWidth, gap, numColumns, cropAt } = state;
 
-  useEffect(() => {
+  function handleResize() {
     window.onresize = () => isResized = true;
     const interval = setInterval(() => {
       if (isResized) {
         isResized = false;
-        dispatch({ type: 'resize', numColumns: calcColsNum() });
+        dispatchState({ type: 'resize', numColumns: calcColsNum() });
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }
 
-  console.log(numColumns);
-  const itemsList = initList.map((item) => (
+  useEffect(handleResize, []);
+  useEffect(() => {
+    console.log(counter);
+    if (counter <= 0) return;
+    const array = getData(counter, 10);
+    counter += -10;
+    dispatchList({ type: 'fetch_items', value: array });
+  }, [list]);
+
+  if (list.length === 0) return null;
+
+  const itemsList = list.map((item) => (
     <NoteWrapper key={item.id}>
       <Note initData={item} cropAt={cropAt}/>
     </NoteWrapper>
@@ -47,8 +55,10 @@ export default function App() {
 
 
   return (
-    <Masonry numColumns={numColumns} colWidth={colWidth} gap={gap}>
-      {itemsList}
-    </Masonry>
+    <div style={{ padding: gap }}>
+      <Masonry numColumns={numColumns} colWidth={colWidth} gap={gap}>
+        {itemsList}
+      </Masonry>
+    </div>
   );
 }

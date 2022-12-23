@@ -3,7 +3,13 @@ import { noteReducer } from './noteReducer';
 
 // const SetupContext = createContext(0);
 
-export default function Note({ initData, cropAt }) {
+export function NoteWrapper({ children }) {
+  return (
+    <div className="NoteWrapper">{children}</div>
+  )
+}
+
+export function Note({ initData, cropAt }) {
   const [noteData, dispatch] = useReducer(noteReducer, { ...initData, isCropped: false });
   const ref = useRef(null);
   const { id, header, body, isCropped } = noteData;

@@ -35,6 +35,7 @@ export default function Masonry({ children, numColumns, colWidth, gap }) {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     gap,
+    width: numColumns * (colWidth + gap) - gap,
   };
 
   return (
