@@ -11,7 +11,7 @@ import { useEffect, useReducer } from "react";
 let isResized = false;
 
 function calcColsNum() {
-  return Math.floor((document.body.clientWidth + setup.gap) / (setup.noteWidth + setup.gap));
+  return Math.floor((document.body.clientWidth - setup.gap) / (setup.noteWidth + setup.gap));
 }
 
 // const initList = getData();
@@ -25,15 +25,22 @@ export default function App() {
   const [list, dispatchListAction] = useReducer(noteReducer, initList);
   const { colWidth, gap, numColumns, cropAt } = state;
 
+  const setResized = () => isResized = true;
   function handleResize() {
-    window.onresize = () => isResized = true;
+    // window.onresize = () => isResized = true;
+    window.addEventListener('resize', setResized);
+    console.log('resize event listener is attached');
     const interval = setInterval(() => {
       if (isResized) {
         isResized = false;
         dispatchStateAction({ type: 'resize', numColumns: calcColsNum() });
       }
     }, 1000);
-    return () => clearInterval(interval);
+    return () => {
+      console.log('cleanup');
+      clearInterval(interval);
+      window.removeEventListener('resize', setResized);
+    }
   }
 
   useEffect(handleResize, []);
