@@ -30,6 +30,7 @@ export default function Masonry({ children, numColumns, colWidth, gap }) {
   ));
 
   const style = {
+    margin: '0 auto',
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'flex-start',
